@@ -1,7 +1,9 @@
 # SQL-Chatting-Application
+
 This is an implementation of a website that lets users chat in real-time. It uses SQL databases for storing user accounts and messages and JavaScript to update chats in real time.
 
 ## Key Features
+
 - Account Creation and Deletion: Users can create and delete their accounts when meeting respective criteria.
 - Dynamic Account Listing: The website contuinally lists registered accounts so connections are made simpler.
 - Real-time Chat: Chats are updated in real-time as messages are typed.
