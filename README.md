@@ -7,6 +7,7 @@ This is an implementation of a website that lets users chat in real-time. It use
 - Real-time Chat: Chats are updated in real-time as messages are typed.
 
 A demonstration of this website can be found [here](https://web.njit.edu/~jm2375/Portfolio/SQLChatting/chat.html). Below is a list of 4 sample accounts that you may access to test the website's features, in addition to any new accounts you create:
+
 | Username | Password      |
 |----------|---------------|
 | Bob      | Secret#123    |
