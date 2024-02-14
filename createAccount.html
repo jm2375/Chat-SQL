@@ -1,0 +1,106 @@
+<head>
+    <title>SQL Chatting Application</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+    <div id="frame">
+        <h2>Create an Account</h2>
+    </div>
+
+    <div id="frame">
+        <button id="submit" onclick="window.location.href='chat.html'">Home</button>
+    </div>
+
+    <div id="frame">
+        <form id="createAccountForm" onsubmit="createAccount(event)">
+            <div>
+                <input type="text" id="username" name="username" placeholder="Enter Username:">
+                <input type="password" id="password" name="password" placeholder="Enter Password:">
+                <button id="submit">Create Account</button>
+            </div>
+        </form>
+    </div>
+</body>
+    
+<script>
+    function createAccount(event){
+        event.preventDefault();
+        var form = document.getElementById("createAccountForm");
+        var formData = new FormData(form);
+        
+        var username = formData.get("username").trim();
+        var password = formData.get("password").trim();
+
+        var errorMessage = "";
+        var fieldError = "";
+        var validationFailed = false;
+
+        if(!/^[A-Za-z]+$/.test(username)){
+            errorMessage = "Username must only include alphabetical characters.";
+            validationFailed = true;
+            fieldError = "username";
+        }
+        if(/^\s*$/.test(username)){
+            errorMessage = "Username is blank.";
+            validationFailed = true;
+            fieldError = "username";
+        }
+
+        if(!/^.{8,16}$/.test(password)){
+            errorMessage = "Password must be between 8 and 16 characters in length.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+        if(!/\W/.test(password)){
+            errorMessage = "Password must contain at least one special character.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+        if(!/(?=.*\d)/.test(password)){
+            errorMessage = "Password must contain at least one digit.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+        if(!/(?=.*[a-z])/.test(password)){
+            errorMessage = "Password must contain at least one lowercase letter.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+        if(!/(?=.*[A-Z])/.test(password)){
+            errorMessage = "Password must contain at least one uppercase letter.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+        if(/^\s*$/.test(password)){
+            errorMessage = "Password is blank.";
+            validationFailed = true;
+            fieldError = "password";
+        }
+
+        if(validationFailed){
+            alert(errorMessage);
+            document.getElementById(fieldError).focus();
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "createAccount.php", true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    var response = xhr.responseText;
+                    if(response === "Account created successfully!"){ 
+                        alert(response);
+                        window.location.href = "chat.html";
+                    }
+                    else{
+                        alert(response);
+                    }
+                }
+            }
+        };
+        xhr.send('username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password));
+    }
+</script>

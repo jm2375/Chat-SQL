@@ -1,0 +1,107 @@
+<head>
+    <title>SQL Chatting Application</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+    <div id="userList">
+        <h3>List of Chat Users</h3>
+        <ul id="users"></ul>
+    </div>
+
+    <div id="frame">
+        <button id="submit" onclick="window.location.href='createAccount.html'">Create an Account</button>
+        <button id="submit" onclick="window.location.href='deleteAccount.html'">Delete an Account</button>
+    </div>
+
+    <div id="chatInterface">
+        <div>
+            <input type="text" id="username" placeholder="Enter Username:">
+            <input type="password" id="password" placeholder="Enter Password:">
+        </div>
+
+        <div>
+            <textarea id="chatInput" placeholder="Chat to Send"></textarea>
+            <input type="text" id="updateWarning" readonly></input>
+        </div>
+    </div>
+
+    <div id="chatInterface">
+        <div>
+            <input type="text" id="retrieveUsername" placeholder="Enter Chatting Partner's Name:">
+            <textarea id="chatOutput" placeholder="Chat to Receive" readonly></textarea>
+        </div>
+    </div>
+</body>
+
+<script>
+    let typingTimer;
+    const doneTime = 1000;
+
+    function loadUsers(){
+        fetch("listUsers.php")
+
+        .then(response => response.text())
+        .then(data => {
+            const users = data.split("\n").filter(Boolean);
+            const userListElement = document.getElementById("users");
+            
+            userListElement.innerHTML = "";
+            users.forEach(name => {
+                const listItem = document.createElement("li");
+                
+                listItem.textContent = name;
+                userListElement.appendChild(listItem);
+            });
+        });
+    }
+
+    function doneTyping(){
+        const name = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("chatInput").value;
+
+        if(name && password && message){
+            fetch("updateChat.php", {method: "POST", headers: {"Content-Type": "application/x-www-form-urlencoded",}, body: `Name=${encodeURIComponent(name)}&Password=${encodeURIComponent(password)}&Chat=${encodeURIComponent(message)}`})
+            .then(response => response.text())
+            .then(data => {
+                const warningText = document.getElementById("updateWarning");
+            
+                if(data.trim() === "true"){
+                    warningText.value = "";
+                }
+                else if(data.trim() === "false"){
+                    warningText.value = "Invalid username or password";
+                }
+                else{
+                    warningText.value = "Failed to send message";
+                }
+            });
+        }
+    }
+
+    document.getElementById("chatInput").addEventListener("keyup", () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTime);
+    });
+
+    function messageListen(){
+        const partner = document.getElementById("retrieveUsername").value;
+        
+        if(partner){
+            fetch("getMessages.php?Name=" + encodeURIComponent(partner))
+            
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("chatOutput").textContent = data;
+            });        
+        }
+    }
+
+    setInterval(messageListen, 3000);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadUsers();
+        messageListen();
+    });
+</script>

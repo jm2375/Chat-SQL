@@ -1,0 +1,75 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: white;
+}
+
+#userList, #chatInterface, #frame{
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #555;
+    background-color: #444;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+#userNames{
+    list-style-type: none;
+    padding: 0;
+}
+
+#userNames li{
+    padding: 5px;
+    border-bottom: 1px solid #555;
+}
+
+input[type="text"], input[type="password"], textarea, #updateWarning{
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #555;
+    color: white;
+    border: 1px solid #666;
+}
+
+textarea{
+    font-family: Arial, sans-serif;
+}
+
+#updateWarning, #updateWarning::placeholder{
+    color: red;
+}
+
+#chatInput, #chatOutput {
+    border: 1px solid #555;
+    height: 100px;
+    overflow-y: scroll;
+    background-color: #555;
+    padding: 10px;
+}
+
+textarea::placeholder{
+    color: white;
+}
+
+#username::placeholder, #password::placeholder, #retrieveUsername::placeholder{
+    color: #8b8b8b;
+}
+
+input:focus{
+    outline: 0
+}
+
+#submit{
+    background-color: #c2c2c2;
+    color: #333;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#submit:hover{
+    background-color: #dddddd;
+}

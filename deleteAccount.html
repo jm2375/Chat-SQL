@@ -1,0 +1,66 @@
+<head>
+    <title>SQL Chatting Application</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+    <div id="frame">
+        <h2>Delete an Account</h2>
+    </div>
+
+    <div id="frame">
+        <button id="submit" onclick="window.location.href='chat.html'">Home</button>
+    </div>
+
+    <div id="frame">
+        <form id="deleteAccountForm" onsubmit="deleteAccount(event)">
+            <div>
+                <input type="text" id="username" name="username" placeholder="Enter Username:">
+                <input type="password" id="password" name="password" placeholder="Enter Password:">
+                <button id="submit">Delete Account</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    function deleteAccount(event){
+        event.preventDefault();
+        var form = document.getElementById("deleteAccountForm");
+        var formData = new FormData(form);
+        
+        var username = formData.get("username").trim();
+        var password = formData.get("password").trim();
+
+        if(username === "" || password === ""){
+            alert("Username and password cannot be empty.");
+            return;
+        }
+        
+        var confirmation = confirm("Are you sure you want to delete your account?");
+        if(!confirmation){
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "deleteAccount.php", true);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    var response = xhr.responseText;
+                    if(response === "Account deleted successfully!"){
+                        alert(response);
+                        window.location.href = "chat.html";
+                    }
+                    else{
+                        alert(response);
+                    }
+                }
+                else{
+                    alert("Error: " + xhr.statusText);
+                }
+            }
+        };
+        xhr.send(formData);
+    }
+</script>
