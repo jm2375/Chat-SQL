@@ -5,7 +5,7 @@ This is an implementation of a website that lets users chat in real-time. It use
 ## Key Features
 
 - Account Creation and Deletion: Users can create and delete their accounts when meeting respective criteria.
-- Dynamic Account Listing: The website contuinally lists registered accounts so connections are made simpler.
+- Dynamic Account Listing: The website continually lists registered accounts so connections are made simpler.
 - Real-time Chat: Chats are updated in real-time as messages are typed.
 
 ## Demonstration
