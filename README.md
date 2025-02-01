@@ -1,4 +1,4 @@
-# SQL-Chatting-Application
+# Chat-SQL
 
 This is an implementation of a website that lets users chat in real-time. It uses SQL databases for storing user accounts and messages and JavaScript to update chats in real time.
 
